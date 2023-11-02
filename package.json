@@ -1,0 +1,28 @@
+{
+  "name": "inventry-mngmnt",
+  "version": "1.0.0",
+  "description": "a powerful tool to manage inventry effectively",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vine16/inventry-mngmnt.git"
+  },
+  "keywords": [
+    "inventry-management",
+    "business",
+    "work",
+    "management",
+    "optimize",
+    "online",
+    "digital"
+  ],
+  "author": "vinay kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vine16/inventry-mngmnt/issues"
+  },
+  "homepage": "https://github.com/vine16/inventry-mngmnt#readme"
+}
