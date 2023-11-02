@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/vine16/inventry-mngmnt/issues"
   },
-  "homepage": "https://github.com/vine16/inventry-mngmnt#readme"
+  "homepage": "https://github.com/vine16/inventry-mngmnt#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
