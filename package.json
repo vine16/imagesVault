@@ -1,5 +1,5 @@
 {
-  "name": "inventry-mngmnt",
+  "name": "stock-master",
   "version": "1.0.0",
   "description": "a powerful tool to manage inventry effectively",
   "main": "index.js",
