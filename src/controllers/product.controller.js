@@ -8,8 +8,28 @@ export default class ProductController {
     //   path.join(path.resolve(), "src", "views", "product.html")
     // );
     //no need to specify the complete path here as we have already specified that in "views"
+    //if we don't specify layout name, it will look for "layout.ejs" file
     return res.render("product", {
       products: products,
     });
+  }
+
+  getAddForm(req, res) {
+    return res.render("new-product", { errorMessage: null });
+  }
+
+  addNewProduct(req, res) {
+    ProductModel.add(req.body);
+    let products = ProductModel.get();
+    //without body parser
+    // let rawData = "";
+    // req.on("data", (chunk) => {
+    //   rawData += chunk;
+    // });
+    // req.on("end", () => {
+    //   console.log(rawData);
+    //   // Process the raw form data here
+    // });
+    res.render("product", { products: products });
   }
 }

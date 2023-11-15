@@ -8,8 +8,21 @@ export default class ProductModel {
     this.imageURL = _imageURL;
   }
 
+  //is product model k ye saare products hain, thus these are belong to class not specific object of "ProductModel" class
   static get() {
     return products;
+  }
+
+  //there is no need to create a specific product to add new product, thus it's statis
+  static add(productObj) {
+    let newProduct = new ProductModel(
+      products.length + 1,
+      productObj.name,
+      productObj.desc,
+      productObj.price,
+      productObj.imageURL
+    );
+    products.push(newProduct);
   }
 }
 

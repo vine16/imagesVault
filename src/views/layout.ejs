@@ -40,8 +40,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link active" aria-current="page" href="/"
                 >Products</a
+              >
+            </li>
+            <!-- where is the server for "/new" route? who served this original html file -->
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/new"
+                >Add New Product</a
               >
             </li>
           </ul>
@@ -49,6 +55,7 @@
       </div>
     </nav>
     <!-- placeholder for rendering other views -->
+    <!-- body = whatever we are rendering, bec we render one thing at a time, and this layout will be same for all -->
     <div class="container"><%- body %></div>
   </body>
 </html>
