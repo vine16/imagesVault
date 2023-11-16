@@ -32,4 +32,17 @@ export default class ProductController {
     // });
     res.render("product", { products: products });
   }
+
+  getUpdateProductView(req, res, next) {
+    //1. if product exist then return view
+    //2. else return error
+    const { id } = req.body;
+    const productFound = ProductModel.getById(id);
+
+    if (productFound) {
+      res.render("update-product");
+    } else {
+      res.status(401).send("Product not found");
+    }
+  }
 }
