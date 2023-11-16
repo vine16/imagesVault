@@ -27,10 +27,16 @@ const productController = new ProductController();
 // server.post("/", validateAddProductFormData);
 
 server.use(express.static("src/views"));
-server.get("/", productController.getProducts);
+server.get("/", [function(req, res, next)
+{
+  console.log('inside get/');
+  next();
+}],productController.getProducts);
 
 server.get("/new", productController.getAddForm);
 
+
+server.get("/update-product/:id", productController.getUpdateProductView)
 //1. one task per module
 //2. loosly coupled (codes performing diff tasks should be completely seperated)
 server.post("/", validateAddProductFormData, productController.addNewProduct);

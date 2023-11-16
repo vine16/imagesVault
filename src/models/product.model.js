@@ -1,4 +1,3 @@
-//_ represents this is private
 export default class ProductModel {
   constructor(_id, _name, _desc, _price, _imageURL) {
     this.id = _id;
@@ -8,12 +7,10 @@ export default class ProductModel {
     this.imageURL = _imageURL;
   }
 
-  //is product model k ye saare products hain, thus these are belong to class not specific object of "ProductModel" class
   static get() {
     return products;
   }
 
-  //there is no need to create a specific product to add new product, thus it's statis
   static add(productObj) {
     let newProduct = new ProductModel(
       products.length + 1,
@@ -26,7 +23,10 @@ export default class ProductModel {
   }
 
   static getById(id) {
-    return products.find((p) => p.id === id);
+    console.log(typeof id, typeof products[0].id);
+    
+    const result = products.find((p) => p.id == id);;
+    return result;
   }
 }
 
