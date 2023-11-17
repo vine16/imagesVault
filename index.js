@@ -9,7 +9,7 @@ import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-server.use(express.static(path.join(__dirname, "src", "views")));
+server.use(express.static("public"));
 
 //parse form data and put inside req.body object
 //extended: true, can parse(from URLencoded) complex objects like arrays also
@@ -50,7 +50,7 @@ server.post(
 server.post("/", validateAddProductFormData, productController.addNewProduct);
 
 // DELETE route for deleting a product
-server.get("/delete-product/:id", productController.deleteProduct);
+server.post("/delete-product/:id", productController.deleteProduct);
 
 server.listen(PORT, () => {
   console.log("server is listening on PORT", PORT);
