@@ -46,4 +46,17 @@ export default class ProductController {
       res.status(401).send("Product not found");
     }
   }
+
+  postUpdateProduct(req, res, next)
+  {
+    ProductModel.update(req.body);
+    let products = ProductModel.get();
+    res.redirect('/');
+  }
+
+  deleteProduct(req, res, next)
+  {
+    ProductModel.delete(req.params.id);
+    res.redirect('/');
+  }
 }

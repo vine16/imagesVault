@@ -25,8 +25,23 @@ export default class ProductModel {
   static getById(id) {
     console.log(typeof id, typeof products[0].id);
     
-    const result = products.find((p) => p.id == id);;
+    const result = products.find((p) => p.id == id);
     return result;
+  }
+
+  static update(productObj)
+  {
+    const index = products.findIndex((p)=> p.id == productObj.id);
+
+    products[index] = productObj;
+  }
+
+  static delete(productId)
+  {
+    productId = parseInt(productId);
+    products = products.filter(product => product.id !== productId);
+    console.log('products', products);
+    
   }
 }
 

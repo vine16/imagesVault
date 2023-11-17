@@ -1,5 +1,7 @@
 import { promiseImpl } from "ejs";
 import { body, validationResult } from "express-validator";
+import ProductModel from "../models/product.model.js";
+
 //1. setup rules for validation
 //2. run those rules
 //check if there are any errors after running the rules
@@ -20,12 +22,20 @@ export default async function validateAddProductFormData(req, res, next) {
 
   let validationErrors = validationResult(req);
 
-  console.log(validationErrors);
   //3.
   if (!validationErrors.isEmpty()) {
-    return res.render("new-product", {
-      errorMessage: validationErrors.array()[0].msg,
-    });
+    // Check the route and render the appropriate view
+    if (req.path === "/update-product") {
+      return res.render("update-product", {
+        errorMessage: validationErrors.array()[0].msg,
+        product: ProductModel.getById(req.body.id), //to show the pre-filled form with earlier information
+      });
+    } else {
+      // Assuming the default route is "/"
+      return res.render("new-product", {
+        errorMessage: validationErrors.array()[0].msg,
+      });
+    }
   }
   next();
 }
