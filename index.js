@@ -5,7 +5,7 @@ import ejsLayouts from "express-ejs-layouts";
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-
+import upload from "./src/middlewares/file-upload.middleware.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -47,7 +47,12 @@ server.post(
 );
 //1. one task per module
 //2. loosly coupled (codes performing diff tasks should be completely seperated)
-server.post("/", validateAddProductFormData, productController.addNewProduct);
+server.post(
+  "/",
+  validateAddProductFormData,
+  upload.single("imageURL"),
+  productController.addNewProduct
+);
 
 // DELETE route for deleting a product
 server.post("/delete-product/:id", productController.deleteProduct);

@@ -12,7 +12,7 @@ export default async function validateAddProductFormData(req, res, next) {
     body("price")
       .isFloat({ gt: 0 })
       .withMessage("Price should be a positive value"),
-    body("imageURL").isURL().withMessage("Invalid url"),
+    body("imageURL").notEmpty().withMessage("You must select an image"),
   ];
 
   //2.
@@ -21,10 +21,12 @@ export default async function validateAddProductFormData(req, res, next) {
   await Promise.all(rules.map((rule) => rule.run(req)));
 
   let validationErrors = validationResult(req);
+  console.log("validationerrors", req.body);
 
   //3.
   if (!validationErrors.isEmpty()) {
     // Check the route and render the appropriate view
+    //we are using this middleware for two different routes
     if (req.path === "/update-product") {
       return res.render("update-product", {
         errorMessage: validationErrors.array()[0].msg,
