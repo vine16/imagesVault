@@ -1,62 +1,59 @@
 import express from "express";
 import path from "path";
-const server = express();
 import ejsLayouts from "express-ejs-layouts";
-
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import upload from "./src/middlewares/file-upload.middleware.js";
+import ImageController from "./src/controllers/image.controller.js";
+import validateAddImageFormData from "./src/middlewares/validation.middleware.js";
+import UserController from "./src/controllers/user.controller.js";
+import validateRegisterForm from "./src/middlewares/validate.register.js";
+import { auth } from "./src/middlewares/auth.middleware.js";
+import cookieParser from "cookie-parser";
+import { signup, signin, logout } from "./src/controllers/authController.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+import dotenv from "dotenv";
 
-server.use(express.static("public"));
+dotenv.config({ path: "./config.env" });
+// import expressfileupload from "express-fileupload";
 
+const app = express();
+
+// app.use(expressfileupload());
 //parse form data and put inside req.body object
-//extended: true, can parse(from URLencoded) complex objects like arrays also
-// server.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
-// const ProductController = require("./src/controllers/product.controller");
-import ProductController from "./src/controllers/product.controller.js";
-import validateAddProductFormData from "./src/middlewares/validation.middleware.js";
-import ProductModel from "./src/models/product.model.js";
+app.use(cookieParser());
+app.set("view engine", "ejs");
+app.set("views", path.resolve("src", "views"));
+app.use(ejsLayouts);
 
-// else we have to write data type like this res.render('example.ejs', { data: someData });
-server.set("view engine", "ejs");
-//by default express will look for 'views' directory
-server.set("views", path.resolve("src", "views"));
-server.use(ejsLayouts);
-
-const PORT = 3000;
-
-//instance of product controller
-const productController = new ProductController();
+//instance of image controller
+const imageController = new ImageController();
 // it serves the files within that directory directly, but it does not include the directory name itself in the URL.
-// server.use(express.static(path.join(__dirname, "src", "views")));
 
-// server.post("/", validateAddProductFormData);
-server.get("/", productController.getProducts);
+const userController = new UserController();
 
-server.get("/new", productController.getAddForm);
+app.get("/", auth, imageController.getImages);
 
-server.get("/update-product/:id", productController.getUpdateProductView);
+app.get("/new", auth, imageController.getAddForm);
 
-server.post(
-  "/update-product",
-  validateAddProductFormData,
-  productController.postUpdateProduct
-);
 //1. one task per module
 //2. loosly coupled (codes performing diff tasks should be completely seperated)
-server.post(
+app.post(
   "/",
-  upload.single("imageURL"), //first multer will fill the body object with form data which is multipart
-  validateAddProductFormData,
-  productController.addNewProduct
+  auth,
+
+  imageController.addNewImage
 );
 
-// DELETE route for deleting a product
-server.post("/delete-product/:id", productController.deleteProduct);
+//register new user
+app.get("/register", userController.getRegister);
+app.get("/login", userController.getLogin);
+app.post("/register", validateRegisterForm, signup);
+app.post("/login", signin);
 
-server.listen(PORT, () => {
-  console.log("server is listening on PORT", PORT);
-});
+app.get("/logout", logout);
+
+export default app;

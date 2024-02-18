@@ -1,9 +1,0 @@
-1. Install multer
-2. changes in view (input type file)
-3. submit form with images (not just text)
-4. middleware to handle files
-    i) save file in one of the folder in server
-    ii) take that url and store in array
-    iii) middleware to do that
-5. Apply that middleware
-6. Update Controller to update urls of the images    
