@@ -12,7 +12,6 @@ export default async function validateAddProductFormData(req, res, next) {
     body("price")
       .isFloat({ gt: 0 })
       .withMessage("Price should be a positive value"),
-    body("imageURL").notEmpty().withMessage("You must select an image"),
   ];
 
   //2.

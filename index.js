@@ -13,7 +13,7 @@ server.use(express.static("public"));
 
 //parse form data and put inside req.body object
 //extended: true, can parse(from URLencoded) complex objects like arrays also
-server.use(express.urlencoded({ extended: true }));
+// server.use(express.urlencoded({ extended: true }));
 
 // const ProductController = require("./src/controllers/product.controller");
 import ProductController from "./src/controllers/product.controller.js";
@@ -26,7 +26,7 @@ server.set("view engine", "ejs");
 server.set("views", path.resolve("src", "views"));
 server.use(ejsLayouts);
 
-const PORT = 2000;
+const PORT = 3000;
 
 //instance of product controller
 const productController = new ProductController();
@@ -49,8 +49,8 @@ server.post(
 //2. loosly coupled (codes performing diff tasks should be completely seperated)
 server.post(
   "/",
+  upload.single("imageURL"), //first multer will fill the body object with form data which is multipart
   validateAddProductFormData,
-  upload.single("imageURL"),
   productController.addNewProduct
 );
 
